@@ -25,14 +25,18 @@ path = "src/lib.rs"
 
 [dependencies]
 anyhow = "1.0.57"
+async-std = { version = "1.11.0", features = ["attributes"], optional = true }
+# embassy = { version = "0.1.0", path = "./embassy/embassy", features = ["defmt", "nightly"], optional = true  }
 # rtm = { package = "rtm-rs", version = "0" }
 thiserror = "1.0.30"
+tokio = { version = "1.17.0", features = ["full"], optional = true }
 
 [dev-dependencies]
 aquamarine = "0.1.11"
 criterion = { version = "0.3", features = ["html_reports"] }
 futures = "0.3"
 futures-timer = "3"
+macrotest = "1"
 mockall = "0.11"
 rtm = { package = "rtm-rs", version = "0", path = "./../../rtm" }
 rtm-devtools = { path = "./../rtm-devtools" }
@@ -41,11 +45,10 @@ trybuild = "1"
 [features]
 # Nothing by default
 default = []
-
-[profile.bench]
-opt-level = 3
-lto = true
-
+ci = []
+as = ["async-std"]
+# ea = ["embassy"]
+tk = ["tokio"]
 
 [package.metadata.docs.rs]
 all-features = true
