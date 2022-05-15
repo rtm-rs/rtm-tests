@@ -1,37 +1,34 @@
-use crate::defaults::IntegrationTest; //IntegrationTest;
+mod factory;
 
-inventory::submit!(IntegrationTest {
-    name: "indev",
-    test_fn: indev,
-    indev: Some(true),
-});
-
-// #[cfg(not(feature = "ci"))]
-pub fn indev() {
-    // To generate macro result files
-    let src = "src/integration/defaults/tests/001_sync.rs";
-    let srcx = "src/integration/defaults/tests/001_sync.expanded.rs";
-    macrotest::expand(src);
-
-    // #[cfg(feature = "as")]
-    // macrotest::expand_args(src, &["--features", "minitrace-tests/as"]);
-    // #[cfg(feature = "ea")]
-    // macrotest::expand_args(src, &["--features", "minitrace-tests/ea"]);
-    // #[cfg(feature = "tk")]
-    // macrotest::expand_args(
-    //     src,
-    //     &[
-    //         "--features",
-    //         "minitrace-tests/tk",
-    //         "--manifest-path",
-    //         "./Cargo.toml",
-    //     ],
-    // );
-
-    build_indev(srcx);
+#[derive(Debug)]
+pub struct IntegrationDefaultsTests {
+    pub name: &'static str,
+    pub test_fn: fn(),
+    pub indev: Option<bool>,
 }
 
-fn build_indev(src: &str) {
-    let t = trybuild::TestCases::new();
-    t.pass(src);
+::inventory::collect!(IntegrationDefaultsTests);
+
+fn setup() {
+    println!("Setup")
+}
+
+fn teardown() {
+    println!("Teardown")
+}
+// NOTE:
+// When this code is in src/main.rs, it is executed by `cargo test -- --list`.
+// In such cases you can guard it:
+// #[cfg(any(feature = "as", feature = "ea", feature = "tk"))]
+fn main() {
+    // Setup test environment
+    setup();
+
+    // Run the tests
+    for t in ::inventory::iter::<IntegrationDefaultsTests> {
+        (t.test_fn)()
+    }
+
+    // Teardown test environment
+    teardown();
 }

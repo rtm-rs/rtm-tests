@@ -1,5 +1,5 @@
 #[derive(Debug)]
-struct test;
+struct Test;
 
 fn f(a: u32) -> u32 {
     a

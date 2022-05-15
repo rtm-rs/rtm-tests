@@ -57,5 +57,5 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [[test]]
 name = "defaults"
-path = "src/integration/main.rs"
+path = "src/integration/defaults/test.rs"
 harness = false
