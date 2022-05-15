@@ -36,6 +36,7 @@ aquamarine = "0.1.11"
 criterion = { version = "0.3", features = ["html_reports"] }
 futures = "0.3"
 futures-timer = "3"
+inventory = "0.2.2"
 macrotest = "1"
 mockall = "0.11"
 rtm = { package = "rtm-rs", version = "0", path = "./../../rtm" }
@@ -53,3 +54,8 @@ tk = ["tokio"]
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
+
+[[test]]
+name = "defaults"
+path = "src/integration/main.rs"
+harness = false
