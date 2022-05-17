@@ -24,7 +24,7 @@ fn main() {
     // Setup test environment
     setup();
 
-    // Run the tests
+    // Run the expansion tests
     for t in ::inventory::iter::<IntegrationDefaultsTests> {
         (t.test_fn)()
     }
